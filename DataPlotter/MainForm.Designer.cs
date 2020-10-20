@@ -114,11 +114,6 @@
             0,
             65536});
             this.dxEdit.Location = new System.Drawing.Point(312, 27);
-            this.dxEdit.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
             this.dxEdit.Name = "dxEdit";
             this.dxEdit.Size = new System.Drawing.Size(68, 23);
             this.dxEdit.TabIndex = 6;

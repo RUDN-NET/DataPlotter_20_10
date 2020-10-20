@@ -62,14 +62,28 @@ namespace DataPlotter
             return Math.Sin(x) / x;
         }
 
+        /// <summary>Функция создаёт массив данных для указанной функции</summary>
+        /// <param name="f">Исследуемая функция</param>
+        /// <param name="Xmin">Минимум области определения</param>
+        /// <param name="Xmax">Максимум области определения</param>
+        /// <param name="dx">Шаг расчёта значений функции</param>
+        /// <returns>Массив вычисленных значений в точках</returns>
+        /// <exception cref="InvalidOperationException">В случае если Xmin больше, либо равно Xmax</exception>
+        /// <exception cref="ArgumentOutOfRangeException">если dx меньше, либо равен 0</exception>
         public static Value[] CreateData(
             Func<double, double> f,
             double Xmin, double Xmax,
             double dx
         )
         {
+            //if (Xmin >= Xmax)
+            //    throw new Exception("Ошибка области определения функции");
+
             if (Xmin >= Xmax)
-                throw new Exception("Ошибка области определения функции");
+                throw new InvalidOperationException("Перепутаны значения интервала области определения функции");
+
+            if (dx <= 0)
+                throw new ArgumentOutOfRangeException(nameof(dx), dx, "Значение шага dx должно быть больше 0");
 
             var points_count = (int)((Xmax - Xmin) / dx) + 1;
 

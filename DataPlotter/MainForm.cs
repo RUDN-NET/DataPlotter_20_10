@@ -31,8 +31,31 @@ namespace DataPlotter
             var x_max = (double)XmaxEdit.Value;
             var dx = (double)dxEdit.Value;
 
-            var data = Data.CreateData(x => Data.Sinc(2 * Math.PI * x),
-                x_min, x_max, dx);
+            Value[] data;
+            try
+            {
+                data = Data.CreateData(x => Data.Sinc(2 * Math.PI * x), x_min, x_max, dx);
+            }
+            //catch (Exception exception) // перехват всех возможных исключений не рекомендуется!
+            //{
+
+            //}
+            catch (InvalidOperationException error)
+            {
+                MessageBox.Show(
+                    error.Message, "Ошибка!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+            catch (ArgumentOutOfRangeException error)
+            {
+                MessageBox.Show(
+                    error.Message, "Ошибка!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
 
             Data.WriteDataToFile(data, selected_file);
         }
