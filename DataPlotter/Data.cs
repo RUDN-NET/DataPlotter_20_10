@@ -68,6 +68,9 @@ namespace DataPlotter
             double dx
         )
         {
+            if (Xmin >= Xmax)
+                throw new Exception("Ошибка области определения функции");
+
             var points_count = (int)((Xmax - Xmin) / dx) + 1;
 
             var points = new Value[points_count];
