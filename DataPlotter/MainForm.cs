@@ -24,6 +24,15 @@ namespace DataPlotter
 
             var selected_file = save_file_dialog.FileName;
 
+            
+            var data = CreateData(x => Sinc(2 * Math.PI * x), -5, 5, 0.1);
+
+        }
+
+        private static double Sinc(double x)
+        {
+            if (x == 0) return 1;
+            return Math.Sin(x) / x;
         }
 
         private static DataPoint[] CreateData(
