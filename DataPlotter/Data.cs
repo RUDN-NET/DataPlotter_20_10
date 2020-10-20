@@ -11,21 +11,27 @@ namespace DataPlotter
         public static DataPoint[] ReadDataFromFile(string FileName)
         {
             var points = GetPoints(FileName).ToArray();
-
-            return null; // Чтобы компилятор не ругался...
+            return points;
         }
 
-        private static IEnumerable<DataPoint> GetPoints(string FileName)
+        private static IEnumerable<DataPoint> GetPoints(string FileName, int HeaderLinesCount = 1)
         {
             using (var file = File.OpenText(FileName))
             {
-                file.ReadLine();
+                for (var i = 0; i < HeaderLinesCount && !file.EndOfStream; i++)
+                    file.ReadLine();
 
                 while (!file.EndOfStream)
                 {
                     var line = file.ReadLine();
 
+                    //if(line.Length == 0) continue;
+                    //if(line == null || line.Length == 0) continue;
+                    if(string.IsNullOrEmpty(line)) continue;
+
                     var xy_str = line.Split(';');
+
+                    if(xy_str.Length < 2) continue;
 
                     var x = double.Parse(xy_str[0]);
                     var y = double.Parse(xy_str[1]);

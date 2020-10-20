@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace DataPlotter
@@ -12,7 +10,7 @@ namespace DataPlotter
             InitializeComponent();
         }
 
-        private void GenerateDataButton_Click(object sender, System.EventArgs e)
+        private void GenerateDataButton_Click(object sender, EventArgs e)
         {
             var save_file_dialog = new SaveFileDialog
             {
@@ -44,7 +42,7 @@ namespace DataPlotter
 
             var selected_file = open_file_dialog.FileName;
 
-
+            var points = Data.ReadDataFromFile(selected_file);
         }
     }
 }
