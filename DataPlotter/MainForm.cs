@@ -27,8 +27,12 @@ namespace DataPlotter
 
             var selected_file = save_file_dialog.FileName;
 
-            
-            var data = Data.CreateData(x => Data.Sinc(2 * Math.PI * x), -5, 5, 0.01);
+            var x_min = (double)XminEdit.Value;
+            var x_max = (double)XmaxEdit.Value;
+            var dx = (double)dxEdit.Value;
+
+            var data = Data.CreateData(x => Data.Sinc(2 * Math.PI * x),
+                x_min, x_max, dx);
 
             Data.WriteDataToFile(data, selected_file);
         }
