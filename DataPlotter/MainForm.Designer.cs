@@ -30,6 +30,7 @@
         {
             this.GenerateDataButton = new System.Windows.Forms.Button();
             this.ReadDataButton = new System.Windows.Forms.Button();
+            this.plotView1 = new OxyPlot.WindowsForms.PlotView();
             this.SuspendLayout();
             // 
             // GenerateDataButton
@@ -52,11 +53,24 @@
             this.ReadDataButton.UseVisualStyleBackColor = true;
             this.ReadDataButton.Click += new System.EventHandler(this.ReadDataButton_Click);
             // 
+            // plotView1
+            // 
+            this.plotView1.Location = new System.Drawing.Point(12, 57);
+            this.plotView1.Name = "plotView1";
+            this.plotView1.PanCursor = System.Windows.Forms.Cursors.Hand;
+            this.plotView1.Size = new System.Drawing.Size(599, 395);
+            this.plotView1.TabIndex = 2;
+            this.plotView1.Text = "plotView1";
+            this.plotView1.ZoomHorizontalCursor = System.Windows.Forms.Cursors.SizeWE;
+            this.plotView1.ZoomRectangleCursor = System.Windows.Forms.Cursors.SizeNWSE;
+            this.plotView1.ZoomVerticalCursor = System.Windows.Forms.Cursors.SizeNS;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 482);
+            this.Controls.Add(this.plotView1);
             this.Controls.Add(this.ReadDataButton);
             this.Controls.Add(this.GenerateDataButton);
             this.Name = "MainForm";
@@ -69,6 +83,7 @@
 
         private System.Windows.Forms.Button GenerateDataButton;
         private System.Windows.Forms.Button ReadDataButton;
+        private OxyPlot.WindowsForms.PlotView plotView1;
     }
 }
 

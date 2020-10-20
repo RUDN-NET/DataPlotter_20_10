@@ -43,6 +43,8 @@ namespace DataPlotter
             var selected_file = open_file_dialog.FileName;
 
             var points = Data.ReadDataFromFile(selected_file);
+
+            
         }
     }
 }
