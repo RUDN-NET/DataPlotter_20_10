@@ -8,13 +8,13 @@ namespace DataPlotter
 {
     internal static class Data
     {
-        public static DataPoint[] ReadDataFromFile(string FileName)
+        public static Value[] ReadDataFromFile(string FileName)
         {
             var points = GetPoints(FileName).ToArray();
             return points;
         }
 
-        private static IEnumerable<DataPoint> GetPoints(string FileName, int HeaderLinesCount = 1)
+        private static IEnumerable<Value> GetPoints(string FileName, int HeaderLinesCount = 1)
         {
             using (var file = File.OpenText(FileName))
             {
@@ -36,14 +36,14 @@ namespace DataPlotter
                     var x = double.Parse(xy_str[0]);
                     var y = double.Parse(xy_str[1]);
 
-                    var point = new DataPoint(x, y);
+                    var point = new Value(x, y);
 
                     yield return point;
                 }
             }
         }
 
-        public static void WriteDataToFile(DataPoint[] Points, string FileName)
+        public static void WriteDataToFile(Value[] Points, string FileName)
         {
             using (var file = File.CreateText(FileName))
             {
@@ -62,7 +62,7 @@ namespace DataPlotter
             return Math.Sin(x) / x;
         }
 
-        public static DataPoint[] CreateData(
+        public static Value[] CreateData(
             Func<double, double> f,
             double Xmin, double Xmax,
             double dx
@@ -70,14 +70,14 @@ namespace DataPlotter
         {
             var points_count = (int)((Xmax - Xmin) / dx) + 1;
 
-            var points = new DataPoint[points_count];
+            var points = new Value[points_count];
 
             for (var i = 0; i < points_count; i++)
             {
                 var x = i * dx + Xmin;
                 var y = f(x);
 
-                points[i] = new DataPoint(x, y);
+                points[i] = new Value(x, y);
             }
 
             return points;

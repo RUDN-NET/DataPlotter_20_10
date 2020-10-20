@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using OxyPlot;
+using OxyPlot.Series;
 
 namespace DataPlotter
 {
@@ -44,7 +46,15 @@ namespace DataPlotter
 
             var points = Data.ReadDataFromFile(selected_file);
 
-            
+
+            var plot_model = new PlotModel { Title = $"Данные {selected_file}" };
+
+            var line = new LineSeries();
+            plot_model.Series.Add(line);
+
+            line.Color = OxyColors.Red;
+            line.StrokeThickness = 2;
+
         }
     }
 }
