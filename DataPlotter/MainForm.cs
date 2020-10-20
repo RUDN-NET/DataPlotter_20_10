@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DataPlotter
@@ -27,6 +28,20 @@ namespace DataPlotter
             
             var data = CreateData(x => Sinc(2 * Math.PI * x), -5, 5, 0.1);
 
+            WriteDataToFile(data, selected_file);
+        }
+
+        private static void WriteDataToFile(DataPoint[] Points, string FileName)
+        {
+            using (var file = File.CreateText(FileName))
+            {
+                file.WriteLine("x;f(x)");
+
+                for (var i = 0; i < Points.Length; i++)
+                {
+                    file.WriteLine("{0};{1}", Points[i].X, Points[i].Y);
+                }
+            }
         }
 
         private static double Sinc(double x)
