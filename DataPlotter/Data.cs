@@ -7,6 +7,13 @@ namespace DataPlotter
 {
     internal static class Data
     {
+        public static DataPoint[] ReadDataFromFile(string FileName)
+        {
+
+
+            return null; // Чтобы компилятор не ругался...
+        }
+
         public static void WriteDataToFile(DataPoint[] Points, string FileName)
         {
             using (var file = File.CreateText(FileName))

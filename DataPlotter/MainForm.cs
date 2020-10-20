@@ -31,6 +31,20 @@ namespace DataPlotter
             Data.WriteDataToFile(data, selected_file);
         }
 
-        
+        private void ReadDataButton_Click(object sender, EventArgs e)
+        {
+            var open_file_dialog = new OpenFileDialog
+            {
+                Title = "Выбор файла данных для построения графиков",
+                Filter = "Файлы данных (*.csv)|*.csv|Все файлы (*.*)|*.*",
+                FileName = "data.csv"
+            };
+
+            if (open_file_dialog.ShowDialog() != DialogResult.OK) return;
+
+            var selected_file = open_file_dialog.FileName;
+
+
+        }
     }
 }

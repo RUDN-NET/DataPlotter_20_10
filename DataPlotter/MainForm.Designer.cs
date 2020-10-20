@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.GenerateDataButton = new System.Windows.Forms.Button();
+            this.ReadDataButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // GenerateDataButton
@@ -41,11 +42,22 @@
             this.GenerateDataButton.UseVisualStyleBackColor = true;
             this.GenerateDataButton.Click += new System.EventHandler(this.GenerateDataButton_Click);
             // 
+            // ReadDataButton
+            // 
+            this.ReadDataButton.Location = new System.Drawing.Point(189, 13);
+            this.ReadDataButton.Name = "ReadDataButton";
+            this.ReadDataButton.Size = new System.Drawing.Size(193, 38);
+            this.ReadDataButton.TabIndex = 1;
+            this.ReadDataButton.Text = "Прочитать данные";
+            this.ReadDataButton.UseVisualStyleBackColor = true;
+            this.ReadDataButton.Click += new System.EventHandler(this.ReadDataButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(670, 482);
+            this.Controls.Add(this.ReadDataButton);
             this.Controls.Add(this.GenerateDataButton);
             this.Name = "MainForm";
             this.Text = "Построитель графиков";
@@ -56,6 +68,7 @@
         #endregion
 
         private System.Windows.Forms.Button GenerateDataButton;
+        private System.Windows.Forms.Button ReadDataButton;
     }
 }
 
