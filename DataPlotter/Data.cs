@@ -8,8 +8,15 @@ namespace DataPlotter
 {
     internal static class Data
     {
+        /// <summary>Читает файл данных и возвращает массив точек, содержащийся в нём</summary>
+        /// <param name="FileName">Имя файла для чтения</param>
+        /// <returns>Массив прочитанных точек</returns>
+        /// <exception cref="FileNotFoundException">если файл не найден</exception>
         public static Value[] ReadDataFromFile(string FileName)
         {
+            if (!File.Exists(FileName))
+                throw new FileNotFoundException("Файл данных не найден", FileName);
+
             var points = GetPoints(FileName).ToArray();
             return points;
         }

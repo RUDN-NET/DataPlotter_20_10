@@ -66,14 +66,26 @@ namespace DataPlotter
             {
                 Title = "Выбор файла данных для построения графиков",
                 Filter = "Файлы данных (*.csv)|*.csv|Все файлы (*.*)|*.*",
-                FileName = "data.csv"
+                FileName = "data.csv",
+                CheckFileExists = false
             };
 
             if (open_file_dialog.ShowDialog() != DialogResult.OK) return;
 
             var selected_file = open_file_dialog.FileName;
 
-            var values = Data.ReadDataFromFile(selected_file);
+            Value[] values;
+            try
+            {
+                values = Data.ReadDataFromFile(selected_file);
+            }
+            catch (FileNotFoundException error)
+            {
+                MessageBox.Show(
+                    $"{error.Message}\r\n{error.FileName}", "Ошибка чтения данных",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             PlotData(values, Path.GetFileName(selected_file));
         }
