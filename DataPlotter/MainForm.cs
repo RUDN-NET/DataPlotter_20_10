@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using OxyPlot;
@@ -16,6 +17,8 @@ namespace DataPlotter
 
         private void GenerateDataButton_Click(object sender, EventArgs e)
         {
+            Trace.WriteLine("Нажата кнопка генерации данных");
+
             var save_file_dialog = new SaveFileDialog
             {
                 Title = "Файл исходных данных",
@@ -46,6 +49,8 @@ namespace DataPlotter
                     error.Message, "Ошибка!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                Trace.TraceError(error.ToString());
+
                 return;
             }
             catch (ArgumentOutOfRangeException error)
@@ -54,7 +59,15 @@ namespace DataPlotter
                     error.Message, "Ошибка!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                Trace.TraceError(error.ToString());
+
                 return;
+            }
+            finally
+            {
+                // код в этом блоке выполняется в любом случае
+                // и в случае выполнения без ошибок
+                // и в случае появления ошибки
             }
 
             Data.WriteDataToFile(data, selected_file);
@@ -62,6 +75,8 @@ namespace DataPlotter
 
         private void ReadDataButton_Click(object sender, EventArgs e)
         {
+            Trace.WriteLine("Нажата кнопка чтения данных");
+
             var open_file_dialog = new OpenFileDialog
             {
                 Title = "Выбор файла данных для построения графиков",
@@ -86,6 +101,8 @@ namespace DataPlotter
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+
 
             PlotData(values, Path.GetFileName(selected_file));
         }

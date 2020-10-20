@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace DataPlotter
 {
@@ -23,6 +24,14 @@ namespace DataPlotter
 
         private static IEnumerable<Value> GetPoints(string FileName, int HeaderLinesCount = 1)
         {
+            if (HeaderLinesCount < 0)
+                throw new ArgumentOutOfRangeException(
+                    "HeaderLinesCount",
+                    "Число строк заголовка должно быть больше, либо равно 0");
+
+            if (!File.Exists(FileName))
+                throw new FileNotFoundException("Файл данных не найден", FileName);
+
             using (var file = File.OpenText(FileName))
             {
                 for (var i = 0; i < HeaderLinesCount && !file.EndOfStream; i++)
@@ -52,6 +61,14 @@ namespace DataPlotter
 
         public static void WriteDataToFile(Value[] Points, string FileName)
         {
+            if (Points == null)
+                throw new ArgumentNullException(nameof(Points));
+            if (FileName is null)
+                throw new ArgumentNullException(nameof(FileName));
+
+            if (!File.Exists(FileName))
+                throw new FileNotFoundException("Файл данных не найден", FileName);
+
             using (var file = File.CreateText(FileName))
             {
                 file.WriteLine("x;f(x)");
@@ -105,6 +122,68 @@ namespace DataPlotter
             }
 
             return points;
+        }
+
+        private static double[] GetFileStrings(string FileName)
+        {
+            if (string.IsNullOrWhiteSpace(FileName))
+                throw new ArgumentException("Не указано имя файла");
+            if (!File.Exists(FileName))
+                throw new FileNotFoundException("Не найден указанный файл данных", FileName);
+
+            var values = new List<double>();
+
+            var reader = new StreamReader(FileName);
+
+            try
+            {
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var value = double.Parse(line);
+                    values.Add(value);
+                }
+            }
+            catch (FormatException error)
+            {
+                //Debug.WriteLine(error);   // Вывод информации в окно отладки Студии
+                //Console.WriteLine(error);
+                Trace.WriteLine(error);     // Вывод данных в систему трассировки событий приложения
+
+                //throw; // Перезапуск исключения после внесения информации о нём в журнал
+
+                // Создаём "обёртку" - исключение, в которое добавляем всю нужную нам информацию
+                // и перехваченное иселючение, как причину нового генерируемого исключения
+                throw new InvalidOperationException($"Ошибка формата файла данных {FileName}", error);
+            }
+            finally
+            {
+                //reader.Close();
+                reader.Dispose();
+            }
+
+            //// Конструкция using
+            //using (var file = File.OpenText(FileName))
+            //{
+            //    while(!file.EndOfStream)
+            //        Console.WriteLine(file.ReadLine());
+            //}
+
+            //// Преобразуется компилятором в следующий код:
+            //StreamReader file = null;
+            //try
+            //{
+            //    file = File.OpenText(FileName);
+            //    while (!file.EndOfStream)
+            //        Console.WriteLine(file.ReadLine());
+            //}
+            //finally
+            //{
+            //    if(file != null)
+            //        file.Dispose();
+            //}
+
+            return values.ToArray();
         }
     }
 }
